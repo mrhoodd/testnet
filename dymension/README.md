@@ -1,5 +1,7 @@
 # Install Guide Dymension
 
+## [Website](https://www.dymension.xyz/) | [Discord](https://t.co/jY0E3m5vwu) | [Twitter](https://twitter.com/dYmensionXYZ) | :satellite:[Explorer](https://explorer.moonbridge.team/dymension-test)
+
 **Chain ID:** froopyland_100-1 | **Latest Version:** v1.0.2-beta | **Custom Port:** 137
 
 :red_circle:Specify the name of your moniker (validator) which will be visible in the explorer
