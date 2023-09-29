@@ -45,7 +45,7 @@ source $HOME/.bash_profile
 ```bash
 cd $HOME
 # Install CosmWasm Library
-sudo wget -O /usr/lib/libwasmvm.x86_64.so https://github.com/CosmWasm/wasmvm/releases/download/v1.3.0/libwasmvm.x86_64.so
+wget -P /usr/lib https://github.com/CosmWasm/wasmvm/releases/download/v1.3.0/libwasmvm.x86_64.so
 wget https://github.com/MANTRA-Finance/public/raw/main/mantrachain-testnet/mantrachaind-linux-amd64.zip
 unzip mantrachaind-linux-amd64.zip
 mv mantrachaind $HOME/go/bin
@@ -72,7 +72,7 @@ PEERS=""
 sed -i -e "s/^seeds *=.*/seeds = \"$SEEDS\"/; s/^persistent_peers *=.*/persistent_peers = \"$PEERS\"/" $HOME/.mantrachain/config/config.toml
 
 # Setting minimum gas price
-sed -i -e "s|^minimum-gas-prices *=.*|minimum-gas-prices = \"0.0uaum\"|" $HOME/.mantrachain/config/app.toml
+sed -i -e "s|^minimum-gas-prices *=.*|minimum-gas-prices = \"0.0001uaum\"|" $HOME/.mantrachain/config/app.toml
 
 # Setting pruning
 sed -i 's|^pruning *=.*|pruning = "custom"|' $HOME/.mantrachain/config/app.toml
@@ -157,7 +157,7 @@ mantrachaind tx staking create-validator \
   --from wallet \
   --gas-adjustment 1.4 \
   --gas auto \
-  --gas-prices 0.0uaum \
+  --gas-prices 0.0001uaum \
   -y
 ```
 
