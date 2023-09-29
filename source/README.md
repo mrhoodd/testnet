@@ -148,7 +148,7 @@ sourced tx staking create-validator \
   --details "YOUR_DETAILS" \
   --website "YOUR_WEBSITE_URL" \
   --security-contact "YOUR_EMAIL_ADDRESS" \
-  --chain-id sourcechain-testnet \
+  --chain-id sourcetest-1 \
   --commission-rate 0.10 \
   --commission-max-rate 0.20 \
   --commission-max-change-rate 0.01 \
@@ -156,16 +156,6 @@ sourced tx staking create-validator \
   --from wallet \
   --fees 200000usource \
   -y
-```
-
-## Firewall security
-
-```bash
-sudo ufw default allow outgoing 
-sudo ufw default deny incoming 
-sudo ufw allow ssh/tcp 
-sudo ufw allow ${SOURCE_PORT}56/tcp
-sudo ufw enable
 ```
 
 ## Delete node
