@@ -43,6 +43,11 @@ docker build . -f Dockerfile -t elixir-validator
 ```bash
 docker run -d --restart unless-stopped --name ev elixir-validator
 ```
+## Check the logs
+
+```bash
+docker logs -f ev
+```
 
 ## Getting the latest version
 
@@ -58,4 +63,10 @@ docker build . -f Dockerfile -t elixir-validator
 
 ```bash
 docker run -d --restart unless-stopped --name ev elixir-validator
+```
+
+## Check the logs
+
+```bash
+docker logs -f ev
 ```
