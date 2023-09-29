@@ -2,7 +2,11 @@
 
 ## [Website](https://www.sourceprotocol.io/) | [Twitter](https://twitter.com/sourceprotocol_) | [Discord](https://discord.gg/zj8xxUCeZQ) | :satellite:[Explorer](https://explorer.moonbridge.team/source-test)
 
-**Chain ID:** sourcechain-testnet | **Latest Version:** v1.0.0 | **Custom Port:** 121
+## Public endpoints
+- API: https://source-test.api.moonbridge.team
+- RPC: https://source-test.rpc.moonbridge.team
+
+**Chain ID:** sourcetest-1 | **Latest Version:** v3.0.0 | **Custom Port:** 121
 
 :red_circle:Specify the name of your moniker (validator) which will be visible in the explorer
 
@@ -41,8 +45,9 @@ source $HOME/.bash_profile
 ```bash
 cd $HOME
 git clone https://github.com/Source-Protocol-Cosmos/source.git
-cd source
-git checkout e06b810e842e57ec8f5432c9cdd57883a69b3cee
+cd ~/source
+git fetch
+git checkout v3.0.0
 make install
 sourced version --long | grep -e commit -e version
 ```
@@ -52,21 +57,21 @@ sourced version --long | grep -e commit -e version
 ```bash
 # Set node configuration
 sourced config node tcp://localhost:${SOURCE_PORT}57
-sourced config chain-id sourcechain-testnet
+sourced config chain-id sourcetest-1
 sourced config keyring-backend test
-sourced init $MONIKER --chain-id sourcechain-testnet
+sourced init $MONIKER --chain-id sourcetest-1
 
 # Download genesis and addrbook
-curl -Ls https://raw.githubusercontent.com/MrHoodd/TestnetNodes/main/Althea/althea-testnet-4/genesis.json > $HOME/.source/config/genesis.json
-curl -Ls https://raw.githubusercontent.com/MrHoodd/TestnetNodes/main/Althea/althea-testnet-4/addrbook.json > $HOME/.source/config/addrbook.json
+curl -Ls https://moonbridge.team/snapshots/testnet/source/genesis.json > $HOME/.source/config/genesis.json
+curl -Ls https://moonbridge.team/snapshots/testnet/source/addrbook.json > $HOME/.source/config/addrbook.json
 
 # Set seeds and peers
 SEEDS=""
-PEERS=""
+PEERS="ace839c852739d1ea6e3675d30380fe085c1c23a@52.26.226.21:26656,8145d4d13511e7f89dbd257f51ed5d076941f12f@164.92.98.12:26656"
 sed -i -e "s/^seeds *=.*/seeds = \"$SEEDS\"/; s/^persistent_peers *=.*/persistent_peers = \"$PEERS\"/" $HOME/.source/config/config.toml
 
 # Setting minimum gas price
-sed -i -e "s|^minimum-gas-prices *=.*|minimum-gas-prices = \"0usource\"|" $HOME/.source/config/app.toml
+sed -i -e "s|^minimum-gas-prices *=.*|minimum-gas-prices = \"1usource\"|" $HOME/.source/config/app.toml
 
 # Setting pruning
 sed -i 's|^pruning *=.*|pruning = "custom"|' $HOME/.source/config/app.toml
@@ -95,7 +100,8 @@ After=network-online.target
 
 [Service]
 User=$USER
-ExecStart=$(which sourced) start
+WorkingDirectory=$HOME/.source
+ExecStart=$(which sourced) start --home $HOME/.source
 Restart=on-failure
 RestartSec=5
 LimitNOFILE=65535
@@ -117,6 +123,12 @@ sudo systemctl start sourced && sudo journalctl -u sourced -f --no-hostname -o c
 
 ```bash
 sourced keys add wallet
+```
+
+## Recover wallet
+
+```bash
+sourced keys add wallet --recover
 ```
 
 ## Check wallet balance
@@ -142,9 +154,7 @@ sourced tx staking create-validator \
   --commission-max-change-rate 0.01 \
   --min-self-delegation 1 \
   --from wallet \
-  --gas-adjustment 1.4 \
-  --gas auto \
-  --gas-prices 0usource \
+  --fees 200000usource \
   -y
 ```
 
