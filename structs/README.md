@@ -167,5 +167,4 @@ sudo rm -rf /etc/systemd/system/structsd.service
 sudo systemctl daemon-reload
 sudo rm -f $(which structsd) 
 sudo rm -rf $HOME/.structs
-sudo rm -rf $HOME/source
 ```
