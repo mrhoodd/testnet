@@ -72,7 +72,7 @@ PEERS=""
 sed -i -e "s/^seeds *=.*/seeds = \"$SEEDS\"/; s/^persistent_peers *=.*/persistent_peers = \"$PEERS\"/" $HOME/.elys/config/config.toml
 
 # Setting minimum gas price
-sed -i -e "s|^minimum-gas-prices *=.*|minimum-gas-prices = \"0uelys\"|" $HOME/.elys/config/app.toml
+sed -i -e "s|^minimum-gas-prices *=.*|minimum-gas-prices = \"0.0018ibc/2180E84E20F5679FCC760D8C165B60F42065DEF7F46A72B447CFF1B7DC6C0A65,0.00025ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2,0.00025uelys\"|" $HOME/.elys/config/app.toml
 
 # Setting pruning
 sed -i 's|^pruning *=.*|pruning = "custom"|' $HOME/.elys/config/app.toml
@@ -157,7 +157,7 @@ elysd tx staking create-validator \
   --from wallet \
   --gas-adjustment 1.4 \
   --gas auto \
-  --gas-prices 0uelys \
+  --gas-prices 0.00025uelys \
   -y
 ```
 
