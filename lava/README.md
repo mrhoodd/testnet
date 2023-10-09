@@ -2,7 +2,7 @@
 
 ## [Website](https://lavanet.xyz/) | [Twitter](https://twitter.com/lavanetxyz) | [Discord](https://discord.gg/5VcqgwMmkA) | :satellite:[Explorer](https://explorer.moonbridge.team/lava-test)
 
-**Chain ID:** lava-testnet-2 | **Latest Version:** v0.23.5 | **Custom Port:** 134
+**Chain ID:** lava-testnet-2 | **Latest Version:** v0.24.0 | **Custom Port:** 134
 
 :red_circle:Specify the name of your moniker (validator) which will be visible in the explorer
 
@@ -42,7 +42,7 @@ source $HOME/.bash_profile
 cd $HOME
 git clone https://github.com/lavanet/lava.git
 cd lava
-git checkout v0.23.5
+git checkout v0.24.0
 make install
 lavad version --long | grep -e commit -e version
 ```
