@@ -2,7 +2,7 @@
 
 ## [Website](https://www.composable.finance/) | [Discord](https://discord.gg/composable) | [Twitter](https://twitter.com/ComposableFin) | :satellite:[Explorer](https://explorer.moonbridge.team/composable-test)
 
-**Chain ID:** banksy-testnet-3 | **Latest Version:** v5.0.0 | **Custom Port:** 122
+**Chain ID:** banksy-testnet-3 | **Latest Version:** v6.0.2-ics | **Custom Port:** 122
 
 :red_circle:Specify the name of your moniker (validator) which will be visible in the explorer
 
@@ -42,7 +42,7 @@ source $HOME/.bash_profile
 cd $HOME
 git clone https://github.com/notional-labs/composable-testnet.git
 cd composable-testnet
-git checkout v5.0.0
+git checkout v6.0.2-ics
 make install
 centaurid version --long | grep -e commit -e version
 ```
