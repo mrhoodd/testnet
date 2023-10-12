@@ -1,6 +1,11 @@
 # Install Guide Entangle
 
-## [Website](https://entangle.fi/) | [Twitter](https://twitter.com/Entanglefi) | [Discord](https://discord.com/invite/entanglefi) | :satellite:[Explorer](https://explorer.moonbridge.team/nibiru-test)
+## [Website](https://entangle.fi/) | [Twitter](https://twitter.com/Entanglefi) | [Discord](https://discord.com/invite/entanglefi) | :satellite:[Explorer](https://explorer.moonbridge.team/entangle-test)
+
+## Public endpoints
+
+- API: https://entangle-test.api.moonbridge.team
+- RPC: https://entangle-test.rpc.moonbridge.team
 
 **Chain ID:** entangle_33133-1 | **Latest Version:** v1.0.1 | **Custom Port:** 142
 
@@ -56,28 +61,21 @@ entangled config keyring-backend test
 entangled init $MONIKER --chain-id entangle_33133-1
 
 # Download genesis and addrbook
-curl -Ls https://raw.githubusercontent.com/MrHoodd/MainnetNodes/main/Nois/genesis.json > $HOME/.entangled/config/genesis.json
-curl -Ls https://raw.githubusercontent.com/MrHoodd/MainnetNodes/main/Nois/addrbook.json > $HOME/.entangled/config/addrbook.json
+curl -Ls https://moonbridge.team/snapshots/testnet/entangle/genesis.json > $HOME/.entangled/config/genesis.json
+curl -Ls https://moonbridge.team/snapshots/testnet/entangle/addrbook.json > $HOME/.entangled/config/addrbook.json
 
 # Set seeds and peers
-SEEDS=""
+SEEDS="76492a1356c14304bdd7ec946a6df0b57ba51fe2@json-rpc.testnet.entangle.fi:26656"
 PEERS=""
 sed -i -e "s/^seeds *=.*/seeds = \"$SEEDS\"/; s/^persistent_peers *=.*/persistent_peers = \"$PEERS\"/" $HOME/.entangled/config/config.toml
 
 # Setting minimum gas price
 sed -i -e "s|^minimum-gas-prices *=.*|minimum-gas-prices = \"10aNGL\"|" $HOME/.entangled/config/app.toml
 
+sed -i -e 's/max_num_inbound_peers = .*/max_num_inbound_peers = 20/' -e 's/max_num_outbound_peers = .*/max_num_outbound_peers = 10/' $HOME/.entangled/config/config.toml
+
 # Setting pruning
-sed -i -e 's|^pruning *=.*|pruning = "custom"|' $HOME/.entangled/config/app.toml
-sed -i -e 's|^pruning-keep-recent  *=.*|pruning-keep-recent = "100"|' $HOME/.entangled/config/app.toml
-sed -i -e 's|^pruning-keep-every *=.*|pruning-keep-every = "0"|' $HOME/.entangled/config/app.toml
-sed -i -e 's|^pruning-interval *=.*|pruning-interval = "10"|' $HOME/.entangled/config/app.toml
-
-# Disable indexer (optional)
-sed -i -e 's|^indexer *=.*|indexer = "null"|' $HOME/.entangled/config/config.toml
-
-# Enable Prometheus (optional)
-sed -i -e "s/prometheus = false/prometheus = true/" $HOME/.entangled/config/config.toml
+sed -i -e 's|^pruning *=.*|pruning = "nothing"|' $HOME/.entangled/config/app.toml
 
 # Setting custom ports
 sed -i -e "s%^proxy_app = \"tcp://127.0.0.1:26658\"%proxy_app = \"tcp://127.0.0.1:${ENTANGLE_PORT}58\"%; s%^laddr = \"tcp://127.0.0.1:26657\"%laddr = \"tcp://0.0.0.0:${ENTANGLE_PORT}57\"%; s%^pprof_laddr = \"localhost:6060\"%pprof_laddr = \"localhost:${ENTANGLE_PORT}60\"%; s%^laddr = \"tcp://0.0.0.0:26656\"%laddr = \"tcp://0.0.0.0:${ENTANGLE_PORT}56\"%; s%^external_address = \"\"%external_address = \"$(wget -qO- eth0.me):${ENTANGLE_PORT}56\"%; s%^prometheus_listen_addr = \":26660\"%prometheus_listen_addr = \":${ENTANGLE_PORT}66\"%" $HOME/.entangled/config/config.toml
@@ -128,7 +126,7 @@ entangled q bank balances $(entangled keys show wallet -a)
 
 ```bash
 entangled tx staking create-validator \
-  --amount 5000000000000000000aNGL \
+  --amount 1000000000000000000aNGL \
   --pubkey $(entangled tendermint show-validator) \
   --moniker "YOUR_MONIKER_NAME" \
   --identity "YOUR_KEYBASE_ID" \
@@ -142,7 +140,7 @@ entangled tx staking create-validator \
   --min-self-delegation 1 \
   --from wallet \
   --gas-adjustment 1.4 \
-  --gas auto \
+  --gas 500000 \
   --gas-prices 10aNGL \
   -y
 ```
