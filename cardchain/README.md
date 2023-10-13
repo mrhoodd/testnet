@@ -2,7 +2,12 @@
 
 ## [Website](https://crowdcontrol.network/#/) | [Twitter](https://twitter.com/CrowdControlNet?ref_src=twsrc%5Etfw%7Ctwcamp%5Etweetembed%7Ctwterm%5E1577353712963665922%7Ctwgr%5Eeffb4472653f0071a6ba1c0a52b2f82372d78fc6%7Ctwcon%5Es1_&ref_url=https%3A%2F%2Flinktr.ee%2Fcrowdcontrolnet) | [Discord](https://discord.gg/yPA3aKe) | :satellite:[Explorer](https://explorer.moonbridge.team/cardchain-test)
 
-**Chain ID:** Testnet3 | **Latest Version:** 0.81-5450b07d | **Custom Port:** 124
+## Public endpoints
+
+- API: https://cardchain-test.api.moonbridge.team
+- RPC: https://cardchain-test.rpc.moonbridge.team
+
+**Chain ID:** cardtestnet-4 | **Latest Version:** v0.9.0 | **Custom Port:** 124
 
 :red_circle:Specify the name of your moniker (validator) which will be visible in the explorer
 
@@ -40,11 +45,10 @@ source $HOME/.bash_profile
 
 ```bash
 cd $HOME
-wget https://github.com/DecentralCardGame/Cardchain/releases/download/v0.81/Cardchain_latest_linux_amd64.tar.gz
-tar -xvzf Cardchain_latest_linux_amd64.tar.gz
+git clone https://github.com/DecentralCardGame/Cardchain
+wget https://github.com/DecentralCardGame/Cardchain/releases/download/v0.9.0/Cardchaind
 chmod +x Cardchaind
-mv Cardchaind $HOME/go/bin
-rm Cardchain_latest_linux_amd64.tar.gz
+mv $HOME/Cardchaind $HOME/go/bin
 Cardchaind version --long | grep -e commit -e version
 ```
 
@@ -53,17 +57,17 @@ Cardchaind version --long | grep -e commit -e version
 ```bash
 # Set node configuration
 Cardchaind config node tcp://localhost:${CARDCHAIN_PORT}57
-Cardchaind config chain-id Testnet3
+Cardchaind config chain-id cardtestnet-4
 Cardchaind config keyring-backend test
-Cardchaind init $MONIKER --chain-id Testnet3
+Cardchaind init $MONIKER --chain-id cardtestnet-4
 
 # Download genesis and addrbook
-curl -Ls https://raw.githubusercontent.com/DecentralCardGame/Testnet/main/genesis.json > $HOME/.Cardchain/config/genesis.json
-curl -Ls https://raw.githubusercontent.com/MrHoodd/TestnetNodes/main/Cardchain/addrbook.json > $HOME/.Cardchain/config/addrbook.json
+curl -Ls https://moonbridge.team/snapshots/testnet/cardchain/genesis.json > $HOME/.Cardchain/config/genesis.json
+curl -Ls https://moonbridge.team/snapshots/testnet/cardchain/addrbook.json > $HOME/.Cardchain/config/addrbook.json
 
 # Set seeds and peers
 SEEDS=""
-PEERS=""
+PEERS="1ed98c796bcdd0faf5a7ad8793d229e3c7d89543@lxgr.xyz:26656"
 sed -i -e "s/^seeds *=.*/seeds = \"$SEEDS\"/; s/^persistent_peers *=.*/persistent_peers = \"$PEERS\"/" $HOME/.Cardchain/config/config.toml
 
 # Setting minimum gas price
@@ -137,7 +141,7 @@ Cardchaind tx staking create-validator \
   --details "YOUR_DETAILS" \
   --website "YOUR_WEBSITE_URL" \
   --security-contact "YOUR_EMAIL_ADDRESS" \
-  --chain-id Testnet3 \
+  --chain-id cardtestnet-4 \
   --commission-rate 0.10 \
   --commission-max-rate 0.20 \
   --commission-max-change-rate 0.01 \
@@ -149,16 +153,6 @@ Cardchaind tx staking create-validator \
   -y
 ```
 
-## Firewall security
-
-```bash
-sudo ufw default allow outgoing 
-sudo ufw default deny incoming 
-sudo ufw allow ssh/tcp 
-sudo ufw allow ${CARDCHAIN_PORT}56/tcp
-sudo ufw enable
-```
-
 ## Delete node
 
 ```bash
@@ -168,4 +162,5 @@ sudo rm -rf /etc/systemd/system/Cardchaind.service
 sudo systemctl daemon-reload
 sudo rm -f $(which Cardchaind) 
 sudo rm -rf $HOME/.Cardchain
+sudo rm -rf $HOME/Cardchain
 ```
