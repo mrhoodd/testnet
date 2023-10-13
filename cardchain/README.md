@@ -7,7 +7,7 @@
 - API: https://cardchain-test.api.moonbridge.team
 - RPC: https://cardchain-test.rpc.moonbridge.team
 
-**Chain ID:** cardtestnet-4 | **Latest Version:** v0.9.0 | **Custom Port:** 124
+**Chain ID:** cardtestnet-4 | **Latest Version:** v0.9.1 | **Custom Port:** 124
 
 :red_circle:Specify the name of your moniker (validator) which will be visible in the explorer
 
@@ -46,7 +46,7 @@ source $HOME/.bash_profile
 ```bash
 cd $HOME
 git clone https://github.com/DecentralCardGame/Cardchain
-wget https://github.com/DecentralCardGame/Cardchain/releases/download/v0.9.0/Cardchaind
+wget https://github.com/DecentralCardGame/Cardchain/releases/download/v0.9.1/Cardchaind
 chmod +x Cardchaind
 mv $HOME/Cardchaind $HOME/go/bin
 Cardchaind version --long | grep -e commit -e version
