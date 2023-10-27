@@ -47,7 +47,6 @@ ExecStart=/usr/bin/tangle \
   --node-key-file "$HOME/.tangle/node-key" \
   --port 30333 \
   --rpc-port 9933 \
-  --ws-port 9944 \
   --prometheus-port 9615 \
   --auto-insert-keys \
   --validator \
