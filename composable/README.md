@@ -57,7 +57,7 @@ centaurid config keyring-backend test
 centaurid init $MONIKER --chain-id banksy-testnet-3
 
 # Download genesis and addrbook
-curl -Ls https://raw.githubusercontent.com/MrHoodd/TestnetNodes/main/Composable/testnet-3/genesis.json > $HOME/.banksy/config/genesis.json
+curl -Ls https://raw.githubusercontent.com/MrHoodd/TestnetNodes/main/Composable/composable/genesis.json > $HOME/.banksy/config/genesis.json
 curl -Ls https://raw.githubusercontent.com/MrHoodd/TestnetNodes/main/Composable/testnet-3/addrbook.json > $HOME/.banksy/config/addrbook.json
 
 # Set seeds and peers
