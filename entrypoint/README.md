@@ -46,7 +46,7 @@ source $HOME/.bash_profile
 
 ```bash
 cd $HOME
-wget -O entrypointd https://github.com/entrypoint-zone/testnets/releases/download/v1.2.0/entrypointd-1.2.0-linux-amd64
+wget https://snapshots.moonbridge.team/testnet/entrypoint/entrypointd
 chmod +x entrypointd
 mv entrypointd $HOME/go/bin/
 entrypointd version --long | grep -e commit -e version
